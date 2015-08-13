@@ -18,6 +18,26 @@
   </parent>
 
   <dependencies>
+  
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>${commons-dbcp.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>${posgresql.version}</version>
+	</dependency>
+	
+	
     <dependency>
       <groupId>org.daobs</groupId>
       <artifactId>daobs-routing-utility</artifactId>
@@ -102,4 +122,10 @@
       </plugin>
     </plugins>
   </build>
+  
+  <properties>
+  	<posgresql.version>9.1-901.jdbc4</posgresql.version>
+  	<commons-dbcp.version>1.4</commons-dbcp.version>
+  </properties>
+  
 </project>

@@ -24,6 +24,7 @@
                 version="2.0">
 
   <xsl:import href="metadata-inspire-constant.xsl"/>
+  <xsl:include href="metadata-inspire-utility.xsl"/>
   <xsl:include href="metadata-iso19139-medsea.xsl"/>
 
   <xsl:template match="gmd:MD_Metadata" mode="index">

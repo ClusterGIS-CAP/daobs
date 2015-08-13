@@ -60,6 +60,11 @@ public class ValidationReport {
     private double timeWaitingForResponseSeconds;
     private double totalTimeSeconds;
     private StopWatch watch = new StopWatch();
+    
+    public void setCompletenessIndicator(double completnessIndicator){
+    	this.completenessIndicator = completnessIndicator;
+    	this.isAboveThreshold = this.completenessIndicator >= this.threshold;
+    }
 
     /**
      * URL of the validation report provided by the validator.

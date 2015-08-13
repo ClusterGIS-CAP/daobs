@@ -19,6 +19,23 @@
     <property name="probeDataResourceLocators" value="${task.validation-checker.inspire.probeDataResourceLocators}"/>
     <property name="probeNetworkServices" value="${task.validation-checker.inspire.probeNetworkServices}"/>
   </bean>
+  
+  <bean id="inspirePostgresValidator" class="org.daobs.tasks.validation.inspire.PostgresServiceValidatorBean">
+  	<constructor-arg ref="inspirePostgresValidationClient"/>
+  </bean>
+  
+   <bean id="inspirePostgresValidationClient" class="org.daobs.tasks.validation.inspire.PostgresServiceValidatorClient">
+  	<constructor-arg ref="geocatalogueDataSource"/>
+  	<property name="validRuleResult" value="${task.validation-checker.inspire.postgres.validRuleResult}"/>
+  	<property name="selectMetadataValidationResultQuery" value="${task.validation-checker.inspire.postgres.sql.selectMetadataValidationResultQuery}"/>
+  </bean>
+  
+  <bean id="geocatalogueDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<property name="driverClassName" value="${task.validation-checker.inspire.postgres.datasource.driverClassName}"/>
+	<property name="url" value="${task.validation-checker.inspire.postgres.datasource.url}"/>
+	<property name="username" value="${task.validation-checker.inspire.postgres.datasource.username}"/>
+	<property name="password" value="${task.validation-checker.inspire.postgres.datasource.password}"/>
+  </bean>
 
   <bean id="pagination" class="org.daobs.routing.utility.Pagination">
     <property name="recordsPerPage" value="${task.validation-checker.records.per.page}"/>
@@ -270,7 +287,8 @@
               loggingLevel="INFO"
               logName="org.daobs.task.ValidationChecker"/>
 
-      <cm:bean ref="inspireValidationClient" method="validateBody"/>
+<!--       <cm:bean ref="inspireValidationClient" method="validateBody"/> -->
+      <cm:bean ref="{{task.validation-checker.validator}}" method="validateBody"/>
 
       <cm:log message="Validated in $simple{body.totalTimeSeconds}s."
               loggingLevel="INFO"

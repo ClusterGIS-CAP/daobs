@@ -1,0 +1,16 @@
+<daobs:harvesters xmlns:daobs="http://daobs.org"
+
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="../../daobsHarvesterConfig.xsd">
+
+  <daobs:harvester>
+    <daobs:uuid>3f25ac7a-35fa-4a38-ae8b-68f05c8967aa</daobs:uuid>
+    <daobs:territory>FR</daobs:territory>
+    <daobs:folder>FR</daobs:folder>
+    <daobs:name>Geocatalogue Catalogue Server INSPIRE (BRGM)</daobs:name>
+	<daobs:url>http://localhost:8080/geocatws-manager-2.6.0-SNAPSHOT/servicesRest
+    </daobs:url>
+    <daobs:nbOfRecordsPerPage>1</daobs:nbOfRecordsPerPage>
+  </daobs:harvester>
+  
+</daobs:harvesters>
