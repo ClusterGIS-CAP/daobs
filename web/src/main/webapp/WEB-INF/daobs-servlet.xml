@@ -22,6 +22,19 @@
     <amq:transportConnectors>
       <amq:transportConnector uri="tcp://localhost:0" />
     </amq:transportConnectors>
+    <amq:systemUsage>
+            <amq:systemUsage>
+                <amq:memoryUsage>
+                    <amq:memoryUsage limit="64 mb"/>
+                </amq:memoryUsage>
+                <amq:storeUsage>
+                    <amq:storeUsage limit="20 gb"/>
+                </amq:storeUsage>
+                <amq:tempUsage>
+                    <amq:tempUsage limit="20 gb"/>
+                </amq:tempUsage>
+            </amq:systemUsage>
+        </amq:systemUsage>
   </amq:broker>
 
   <import resource="classpath*:META-INF/spring/daobs-harvester-routes.xml"/>
