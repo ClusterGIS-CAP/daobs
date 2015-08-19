@@ -9,13 +9,13 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-public class PostgresServiceValidatorClient {
+public class PostgresServiceValidatorClient extends JdbcDaoSupport{
 	
 	/**
 	 * JdbcTemplate to query database
 	 */
-	private JdbcTemplate template;
 	/**
 	 * Valid INSPIRE rule result varchar in database 
 	 */
@@ -32,18 +32,15 @@ public class PostgresServiceValidatorClient {
 	 * @param selectMetadataValidationResultQuery SQL query to get metadata INSPIRE rule result from a metadata uuid
 	 */
 	public PostgresServiceValidatorClient(DataSource dataSource, String validRuleResult, String selectMetadataValidationResultQuery){
+		setDataSource(dataSource);
 		this.validRuleResult = validRuleResult;
 		this.selectMetadataValidationResultQuery = selectMetadataValidationResultQuery;
-		this.template = new JdbcTemplate(dataSource);
 	}
 	
 	/**
-	 * Constuctor
-	 * @param dataSource Database datasource
+	 * Default constructor 
 	 */
-	public PostgresServiceValidatorClient(DataSource dataSource){
-		this.template = new JdbcTemplate(dataSource);
-	}
+	public PostgresServiceValidatorClient(){}
 	
 	/**
 	 * validRuleResult getter
@@ -89,7 +86,7 @@ public class PostgresServiceValidatorClient {
 		ValidationReport report = new ValidationReport(100);
 		
 		//query database to get the metadata INSPIRE rule result
-		List<String> results  = template.query(selectMetadataValidationResultQuery, new String[]{metadataUuid}, new org.springframework.jdbc.core.RowMapper<String>() {
+		List<String> results  = getJdbcTemplate().query(selectMetadataValidationResultQuery, new String[]{metadataUuid}, new org.springframework.jdbc.core.RowMapper<String>() {
 			@Override
 			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return rs.getString(1);

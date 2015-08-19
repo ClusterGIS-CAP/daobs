@@ -153,7 +153,7 @@ public class PostgresServiceValidatorClientTest extends TestCase {
     	Properties props = new Properties();
     	URI configURI = Thread.currentThread()
     			.getContextClassLoader()
-    			.getResource("config.properties").toURI();
+    			.getResource(System.getProperty("config.dir")).toURI();
     	InputStream input = new FileInputStream(configURI.getPath());
     	props.load(input);
     	input.close();
@@ -168,10 +168,10 @@ public class PostgresServiceValidatorClientTest extends TestCase {
     @org.junit.Test
     public void testValidMetadataValidation() throws DataAccessException, SQLException{
     	String validMetadataUUID = getValidMetadataUUID();
-    	ValidationReport report = validator.validate(validMetadataUUID);
-    	assertNotNull(report);
-    	assertEquals(report.getStatus(), true);
-    	assertEquals(report.isAboveThreshold(), true);
+        ValidationReport report = validator.validate(validMetadataUUID);
+        assertNotNull(report);
+        assertEquals(report.getStatus(), true);
+        assertEquals(report.isAboveThreshold(), true);
     }
     
     /**
@@ -184,23 +184,10 @@ public class PostgresServiceValidatorClientTest extends TestCase {
     	String invalidMetadataUUID = getInvalidMetadataUUID();
     	ValidationReport report = validator.validate(invalidMetadataUUID);
     	assertNotNull(report);
-    	assertEquals(report.getStatus(), true);
+    	assertEquals(report.getStatus(), false);
     	assertEquals(report.isAboveThreshold(), false);
     }
     
-    /**
-     * Test to check validation of an invalid metadata
-     * @throws DataAccessException
-     * @throws SQLException
-     */
-    @org.junit.Test
-    public void testInvalidMetadataValidation2() throws DataAccessException, SQLException{
-    	String invalidMetadataUUID = "Zones vulnérables région30/04/2001 14:57:5120/09/2006 10:42:51";
-    	ValidationReport report = validator.validate(invalidMetadataUUID);
-    	assertNotNull(report);
-    	assertEquals(report.getStatus(), true);
-    	assertEquals(report.isAboveThreshold(), false);
-    }
     
     /**
      * Tezst to check validation of an unknown metadata
