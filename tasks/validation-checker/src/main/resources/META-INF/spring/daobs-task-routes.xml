@@ -10,22 +10,17 @@
 
   <bean id="bridgePropertyPlaceholder"
         class="org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer">
-    <property name="location" value="/WEB-INF/config.properties"/>
+		<property name="location" value="file:${config.dir}"/>
+<!-- 		<property name="location" value="WEB-INF/config.properties"/> -->
   </bean>
-
-  <bean id="inspireValidationClient" class="org.daobs.tasks.validation.inspire.OnlineServiceValidatorBean">
-    <property name="inspireResourceTesterURL" value="${task.validation-checker.inspire.validator.url}"/>
-    <property name="threshold" value="${task.validation-checker.inspire.threshold}"/>
-    <property name="probeDataResourceLocators" value="${task.validation-checker.inspire.probeDataResourceLocators}"/>
-    <property name="probeNetworkServices" value="${task.validation-checker.inspire.probeNetworkServices}"/>
-  </bean>
+  
   
   <bean id="inspirePostgresValidator" class="org.daobs.tasks.validation.inspire.PostgresServiceValidatorBean">
   	<constructor-arg ref="inspirePostgresValidationClient"/>
   </bean>
   
    <bean id="inspirePostgresValidationClient" class="org.daobs.tasks.validation.inspire.PostgresServiceValidatorClient">
-  	<constructor-arg ref="geocatalogueDataSource"/>
+  	<property name="dataSource" ref="geocatalogueDataSource"/>
   	<property name="validRuleResult" value="${task.validation-checker.inspire.postgres.validRuleResult}"/>
   	<property name="selectMetadataValidationResultQuery" value="${task.validation-checker.inspire.postgres.sql.selectMetadataValidationResultQuery}"/>
   </bean>
@@ -35,6 +30,14 @@
 	<property name="url" value="${task.validation-checker.inspire.postgres.datasource.url}"/>
 	<property name="username" value="${task.validation-checker.inspire.postgres.datasource.username}"/>
 	<property name="password" value="${task.validation-checker.inspire.postgres.datasource.password}"/>
+  </bean>
+  
+
+  <bean id="inspireValidationClient" class="org.daobs.tasks.validation.inspire.OnlineServiceValidatorBean">
+    <property name="inspireResourceTesterURL" value="${task.validation-checker.inspire.validator.url}"/>
+    <property name="threshold" value="${task.validation-checker.inspire.threshold}"/>
+    <property name="probeDataResourceLocators" value="${task.validation-checker.inspire.probeDataResourceLocators}"/>
+    <property name="probeNetworkServices" value="${task.validation-checker.inspire.probeNetworkServices}"/>
   </bean>
 
   <bean id="pagination" class="org.daobs.routing.utility.Pagination">
@@ -287,9 +290,8 @@
               loggingLevel="INFO"
               logName="org.daobs.task.ValidationChecker"/>
 
-<!--       <cm:bean ref="inspireValidationClient" method="validateBody"/> -->
-      <cm:bean ref="{{task.validation-checker.validator}}" method="validateBody"/>
-
+	  <cm:bean ref="{{task.validation-checker.validator}}" method="validateBody"/>
+	  
       <cm:log message="Validated in $simple{body.totalTimeSeconds}s."
               loggingLevel="INFO"
               logName="org.daobs.task.ValidationChecker"/>

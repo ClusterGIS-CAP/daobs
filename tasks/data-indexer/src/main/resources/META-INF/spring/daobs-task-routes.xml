@@ -10,7 +10,8 @@
 
   <bean id="bridgePropertyPlaceholder"
         class="org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer">
-    <property name="location" value="/WEB-INF/config.properties"/>
+		<property name="location" value="file:${config.dir}"/>
+<!-- 		<property name="location" value="WEB-INF/config.properties"/> -->
   </bean>
 
   <bean id="pagination" class="org.daobs.routing.utility.Pagination">
