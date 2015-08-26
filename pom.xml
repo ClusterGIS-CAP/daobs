@@ -257,18 +257,18 @@
     <!-- The web application name. Could be run
     as root context using "/" or using a custom
     name eg. "/dashboard". -->
-    <webapp.context>/</webapp.context>
+    <webapp.context>/daobs</webapp.context>
     <!-- Url path of the application.
      if webapp.context is "/", webapp.rootUrl is "/"
      if webapp.context is "/dashboard", webapp.rootUrl is "/dashboard/"
      -->
-    <webapp.rootUrl>/</webapp.rootUrl>
+    <webapp.rootUrl>/daobs/</webapp.rootUrl>
 
     <!-- The public URL of the web application.
     This is used by all services requesting the
     Solr instance. eg. Harvesters. -->
     <webapp.protocol>http</webapp.protocol>
-    <webapp.port>8983</webapp.port>
+    <webapp.port>8080</webapp.port>
     <webapp.url>${webapp.protocol}://localhost:${webapp.port}</webapp.url>
 
     <!-- Default username and password. This
