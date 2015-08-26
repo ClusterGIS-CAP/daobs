@@ -13,7 +13,6 @@
           http://www.springframework.org/schema/mvc/spring-mvc.xsd
           http://activemq.apache.org/schema/core
           http://activemq.apache.org/schema/core/activemq-core.xsd">
-prop
   <ctx:annotation-config/>
   <ctx:component-scan base-package="org.daobs.controller"/>
 
@@ -28,10 +27,10 @@ prop
                     <amq:memoryUsage limit="64 mb"/>
                 </amq:memoryUsage>
                 <amq:storeUsage>
-                    <amq:storeUsage limit="20 gb"/>
+                    <amq:storeUsage limit="3 gb"/>
                 </amq:storeUsage>
                 <amq:tempUsage>
-                    <amq:tempUsage limit="20 gb"/>
+                    <amq:tempUsage limit="3 gb"/>
                 </amq:tempUsage>
             </amq:systemUsage>
         </amq:systemUsage>
