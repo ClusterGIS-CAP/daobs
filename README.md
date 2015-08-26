@@ -20,112 +20,58 @@ associated resources (eg. PDF, JSON, DBF).
 
 The guide for user installing and configuring the application.
 
-## Requirements
+## Software requirements
 
 * Git
 * Java 7
 * Maven 3
 * A modern web browser. The latest version of Chrome and Firefox have been tested to work. Safari also works, except for the "Export to File" feature for saving dashboards. We recommend that you use Chrome or Firefox while building dashboards. IE10+ should be also supported.
 
+## System requirements
+
+* 4GB RAM 
+
+
+
 ## Build the application
 
-Clone and compile the application:
-
+### Create custom data directories
+Create a custom daobs data directory (anywhere).
+For example :
 ```
-git clone --recursive https://github.com/titellus/daobs.git
-cd daobs
-mvn clean install
-```
-
-
-## Run the application
-
-2 options:
-
-* Deploy the WAR file in a servlet container (eg. tomcat).
-* Start the web application using maven.
-
-### Using maven
-
-```
-cd web
-mvn tomcat7:run-war
+mkdir -p /usr/daobs/data
 ```
 
-Access the home page from http://localhost:8983.
-
-
-### Build a custom WAR file
-
-In order to build a custom WAR file, update the following properties which are defined in the root pom.xml:
-* war.name
-* webapp.context
-* webapp.url
-* webapp.username
-* webapp.password
-
-
-Run the following command line and copy the WAR which is built in web/target/{{war.name}}.war.
+Create a custom solr core home directory (anywhere).
+For example :
 ```
-mvn clean install -Dwebapp.context=/dashboard \
-                  -Dwebapp.rootUrl=/dashboard/ \
-                  -Dwebapp.url=http://www.app.org \
-                  -Dwebapp.username=admin \
-                  -Dwebapp.password=secret
+mkdir -p /usr/daobs/core
 ```
 
 
-
-
-### Deploy a WAR file
-
-Create a custom data directory.
+### Clone git directory
+Clone the daobs source files :
 ```
-mkdir /usr/dashboard/data
+git clone --recursive https://github.com/ClusterGIS-CAP/daobs.git
 ```
-
-Unzip the WAR and check that the WEB-INF/config.properties point to this new directory.
-Copy the defaults datadir from WEB-INF/datadir to the custom data directory:
-
-```
-# If using the source code
-cp -fr web/target/solr/WEB-INF/datadir/* /usr/dashboard/data/.
-
-# If using the WAR file
-unzip dashboard.war
-cp -fr WEB-INF/datadir/* /usr/dashboard/data/.
-```
-
-
-Copy the default core configuration folder to the solr.solr.home folder.
-
-```
-# If using the source code
-mkdir /usr/dashboard/core
-cp -fr web/target/solr-cores/* /usr/dashboard/core/.
-```
-
-Set the solr.solr.home system property which define the location of the Solr index. Example: For Tomcat set it in the catalina.sh file.
-
-```
-export JAVA_OPTS="$JAVA_OPTS -Dsolr.solr.home=/usr/dashboard/core"
-```
-
-Deploy the WAR file in Tomcat (or any Java container).
-
-```
-cp web/target/dashboard.war /usr/local/apache-tomcat/webapps/.
-```
-
-Run the container.
-
-Access the home page from http://localhost:8080/dashboard.
-
-If the Solr URL needs to be updated, look into the WEB-INF/config.properties file.
-
-
 
 ## Configuration
+
+### Configure web application
+Web application is configured by the conf/config-daobs.properties file.
+
+Following properties must be updated to match the targeted environement :
+* **data.dir**  : Path to the custom daobs data directory. (eg. /usr/daobs/data/)
+* **solr.server.url** : Solr server URL  (eg. http://localhost:8080/daobs)
+* **solr.server.core** : Path to the solr core home directory (eg. /usr/daobs/core/) 
+* **solr.server.user**  : Solr server user (eg. admin)
+* **solr.server.password**  : Solr server password (eg. admin)
+* **task.validation-checker.inspire.postgres.datasource.url** : Postgres INSPIRE validator datasource url (eg."jdbc:postgresql://10.24.193.134:5432/geocat-dump-brgm")
+* **task.validation-checker.inspire.postgres.datasource.username** : Postgres INSPIRE datasource username
+* **task.validation-checker.inspire.postgres.datasource.password** : Postgres INSPIRE datasource password
+
+Other properties are detailled in comments and don't need to be updated.
+
 
 ### Configure security
 
@@ -133,24 +79,125 @@ Administration pages are accessible only to non anonymous users.
 
 By default, only one user is defined with username "admin" and password "admin". To add more user, configuration is made in WEB-INF/config-security-ba.xml.
 
-### Other build options
 
-#### Building the application in debug mode
+### Configure pom.xml properties
+In order to build a custom WAR file, update the following properties which are defined in the root pom.xml:
+* **war.name** : The WAR file name when building the application (eg. "daobs")
+* **webapp.context** : The web application name (eg. "/dabos").
+* **webapp.rootUrl**  : Url path of the application (eg. "/dabos/")
+* **webapp.protocol** : Protocol used to access the web application (eg. "http")
+* **webapp.port** : Port used to access the web application (eg. "8080").
+* **webapp.username** : Default username. This set the values in Spring security file and in services needing authentication against the Solr instance. eg. Harvesters. (eg. "admin")
+* **webapp.passowd** : Default password. This set the values in Spring security file and in services needing authentication against the Solr instance. eg. Harvesters. (eg. "admin")
 
-For developers, the application could be built in debug mode in order to have the banana project installed without Javascript minification. For this disable the production profile:
-
+### Build with maven
+Run the following command line :
 ```
-mvn clean install -P\!production
+mvn clean install -DskipTests=true
+```
+War file daobs.war is generated in the web/target folder
+
+If a build failure occurs during "Dashboard - dev-2.0" build, run the follwing command lines :
+
+Install nodejs
+```
+curl --silent --location https://rpm.nodesource.com/setup | bash -
+yum install nodejs
 ```
 
-#### Building the application without test
-
-The tests rely on some third party application (eg. INSPIRE validator). It may be useful to build the application without testing:
-
+Install npm
 ```
-mvn clean install -DskipTests
+curl -L https://www.npmjs.com/install.sh | sh
 ```
 
+Install bower
+```
+npm install -g bower
+```
+
+Run bower install in dashobard2. If asked, select jquery v2.1.4 and angularjs 1.3.18.
+```
+cd dashboard2
+bower install --allow-root
+```
+If error #128 is generated run the following command line :
+```
+git config --global url."https://".insteadOf git://
+```
+
+Run build again on daobs :
+```
+mvn clean install -DskipTests=true
+```
+
+
+### Copy defaults datadir
+Unzip the web/target/daobs.war file and copy the defaults datadir from WEB-INF/datadir to the custom data directory :
+```
+cd web/target
+unzip daobs.war
+cp -fr WEB-INF/datadir/* /usr/daobs/data/.
+```
+
+Copy the default core configuration folder to the solr core home folder :
+```
+cp -fr solr-cores/* /usr/daobs/core/.
+```
+
+
+
+
+
+## Deploy WAR file
+
+Set the solr.solr.home system property which define the location of the Solr index. Example: For Tomcat set it in the catalina.sh file.
+```
+export JAVA_OPTS="$JAVA_OPTS -Dsolr.solr.home=/usr/dashboard/core"
+```
+
+File config-daobs.properties must be placed in a shared.loader directory.
+Configure tomcat/conf/catalina.proerties to define a shared.loader directory. Example :
+```
+shared.loader=${catalina.base}/properties,${catalina.home}/properties
+```
+
+Then copy config-daobs.properties file into the shared.loader directory :
+```
+cp conf/conf-daobs.properties /applications/tomcat/properties/.
+```
+
+Deploy the WAR file in Tomcat (or any Java container) :
+```
+cp web/target/daobs.war /usr/local/apache-tomcat/webapps/.
+```
+
+Run the container.
+
+
+
+### Configure tomcat
+
+
+
+## Access web application
+Access the home page from http://localhost:8080/daobs.
+
+### Dashboards
+By default, no dashboards are available. To load INSPIRE dashboards, clic on the "+" icon and select "INSPIRE".
+Click on the "INSPIRE Dashboard" link to visualize the dashboard.
+
+### Harvesting
+Harvesting is available in the "Harvesting" link on the task-bar.
+To launch harvesting click on the "Harvest" button.
+
+### Monitoring
+Monitoring is available in the "Monitoring" link on the task-bar.
+
+To submit a monitoring, click on the "Submit monitoring" tab and select an xml inspire monitoring from the computer. Then click on "Submit monitring" to import it.
+
+To generate an INSPIRE Monitoring, click on the "Create monitoring" tab, select your monitoring type, chose your reporting area (eg. "FR" for France).
+Solr filters on data can be specified in the "Query Filter" text area (eg. "+resourceType:dataset").
+To download the report, click on the "Download" button and select your report type.
 
 ## Search engine architecture
 
@@ -170,7 +217,7 @@ mvn clean install -DskipTests
 
 ### Harvesting records
 
-#### Harvester configuration
+#### Harvester nodes configuration
 
 An harvester engine provides the capability to harvest metadata records from discovery service (CSW end-point).
 The list of nodes to harvest is configured in harvester/csw-harvester/src/main/resources/WEB-INF/harvester/config-harvester.xml.
@@ -202,6 +249,17 @@ Example:
   </filter>
 </harvester>
 ```
+
+### Configure the task
+Harvester is configured by the harvester/csw-harvester/src/main/resources/conf-daobs.properties file
+
+Following properties must be updated to match the targeted environement :
+* **data.dir**  : Path to the custom daobs data directory. (eg. /usr/daobs/data/)
+* **solr.server.url** : Solr server URL  (eg. http://localhost:8080/daobs)
+* **solr.server.user**  : Solr server user (eg. admin)
+* **solr.server.password**  : Solr server password (eg. admin)
+
+Other properties are detailled in comments and don't need to be updated.
 
 #### Running harvester
 
@@ -333,8 +391,22 @@ The results and details of the validation process are stored in the index:
  * isSchemaValid: Boolean
  * schemaValidDate: The date of validation
  * schemaValidReport: XSD validation report
+ 
+ 
+### Configure the task
+Validation task is configured by the /tasks/validation-checker/src/main/resources/conf-daobs.properties file
 
+Following properties must be updated to match the targeted environement :
+* **data.dir**  : Path to the custom daobs data directory. (eg. /usr/daobs/data/)
+* **solr.server.url** : Solr server URL  (eg. http://localhost:8080/daobs)
+* **solr.server.user**  : Solr server user (eg. admin)
+* **solr.server.password**  : Solr server password (eg. admin)
+* **task.validation-checker.inspire.postgres.datasource.url** : Postgres INSPIRE validator datasource url (eg."jdbc:postgresql://194.168.1.1:5432/geocat-dump-brgm")
+* **task.validation-checker.inspire.postgres.datasource.username** : Postgres INSPIRE datasource username
+* **task.validation-checker.inspire.postgres.datasource.password** : Postgres INSPIRE datasource password
 
+Other properties are detailled in comments and don't need to be updated.
+ 
 #### Run the task
 
 To trigger the validation:
@@ -379,6 +451,16 @@ sets by adding the following fields:
 
 The task also propagate INSPIRE theme from each datasets to the service.
 
+### Configure the task
+Task is configured by the /tasks/service-dataset-indexer/src/main/resources/conf-daobs.properties file
+
+Following properties must be updated to match the targeted environement :
+* **data.dir**  : Path to the custom daobs data directory. (eg. /usr/daobs/data/)
+* **solr.server.url** : Solr server URL  (eg. http://localhost:8080/daobs)
+* **solr.server.user**  : Solr server user (eg. admin)
+* **solr.server.password**  : Solr server password (eg. admin)
+
+Other properties are detailled in comments and don't need to be updated.
 
 #### Run the task
 
@@ -406,6 +488,16 @@ to the metadata are also indexed.
 
 Associated document URL are stored in the linkUrl field in the index.
 
+### Configure the task
+Data Analysis task is configured by the /tasks/data-indexer/src/main/resources/conf-daobs.properties file
+
+Following properties must be updated to match the targeted environement :
+* **data.dir**  : Path to the custom daobs data directory. (eg. /usr/daobs/data/)
+* **solr.server.url** : Solr server URL  (eg. http://localhost:8080/daobs)
+* **solr.server.user**  : Solr server user (eg. admin)
+* **solr.server.password**  : Solr server password (eg. admin)
+
+Other properties are detailled in comments and don't need to be updated.
 
 #### Run the task
 
