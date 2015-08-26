@@ -13,7 +13,7 @@
           http://www.springframework.org/schema/mvc/spring-mvc.xsd
           http://activemq.apache.org/schema/core
           http://activemq.apache.org/schema/core/activemq-core.xsd">
-
+prop
   <ctx:annotation-config/>
   <ctx:component-scan base-package="org.daobs.controller"/>
 
@@ -62,7 +62,7 @@
 <!-- 	<ctx:property-placeholder location="WEB-INF/config.properties" -->
 <!--                             file-encoding="UTF-8" -->
 <!--                             ignore-unresolvable="true"/> -->
-  <ctx:property-placeholder location="file:${config.dir}"
+  <ctx:property-placeholder location="classpath:conf-daobs.properties"
                             file-encoding="UTF-8"
                             ignore-unresolvable="true"/>
 
