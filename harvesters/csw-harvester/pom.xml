@@ -56,7 +56,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>WEB-INF/config.properties</exclude>
+            <exclude>conf-daobs.properties</exclude>
             <exclude>log4j.*</exclude>
             <exclude>rebel.xml</exclude>
           </excludes>
