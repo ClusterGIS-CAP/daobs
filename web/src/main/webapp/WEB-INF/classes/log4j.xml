@@ -11,8 +11,8 @@
 
   <appender name="file" class="org.apache.log4j.RollingFileAppender">
     <param name="Threshold" value="ALL" />
-    <!--<param name="File" value="${catalina.home}/logs/daobs.log" />-->
-    <param name="File" value="/tmp/logs/daobs.log" />
+    <param name="File" value="${catalina.home}/logs/daobs.log" />
+    <!--<param name="File" value="/tmp/logs/daobs.log" />-->
     <layout class="org.apache.log4j.PatternLayout">
       <!--<param name="ConversionPattern" value="%d{ISO8601} %-5p [%c] - %m%n" />-->
       <param name="ConversionPattern" value="%d %-5p %10.10X{camel.exchangeId}#%-24.24X{camel.routeId} - %m%n"/>
