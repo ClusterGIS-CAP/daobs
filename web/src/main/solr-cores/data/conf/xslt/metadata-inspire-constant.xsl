@@ -53,4 +53,22 @@
     <fi>Komission asetus (EY) N:o 976/2009, annettu 19 päivänä lokakuuta 2009 , Euroopan parlamentin ja neuvoston direktiivin 2007/2/EY täytäntöönpanosta verkkopalvelujen osalta</fi>
     <sv>Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</sv>
   </xsl:variable>
+  
+  <xsl:variable name="eu9762009BRGM">
+    <cr>COMMISSION REGULATION (EU)</cr>
+    <re>RÈGLEMENT (UE)</re>
+    <in>INSPIRE</in>
+  </xsl:variable>
+  
+  <xsl:variable name="eu10892010BRGM">
+    <cr>COMMISSION REGULATION (EU)</cr>
+    <re>RÈGLEMENT (UE)</re>
+    <in>INSPIRE</in>
+  </xsl:variable>
+  
+  <xsl:variable name="protocolWMS" test="wms"></xsl:variable>
+  <xsl:variable name="protocolWFS" test="wfs"></xsl:variable>
+  <xsl:variable name="protocolDownload" test="download"></xsl:variable>
+  
+  
 </xsl:stylesheet>

@@ -511,8 +511,8 @@
         gmd:title/gco:CharacterString">
 
             <xsl:variable name="title" select="current-grouping-key()"/>
-            <xsl:if test="count($eu10892010/*[lower-case(normalize-space(.)) =
-                lower-case(normalize-space($title))]) = 1">
+            <xsl:if test="count($eu10892010BRGM/*[contains(translate(lower-case(normalize-space($title)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space(.)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu') )]) >= 1">
+
 
               <xsl:variable name="pass" select="*/gmd:result/*/gmd:pass/gco:Boolean"/>
               <field name="inspireConformResource"><xsl:value-of select="$pass"/></field>
@@ -526,10 +526,8 @@
         gmd:title/gco:CharacterString">
 
             <xsl:variable name="title" select="current-grouping-key()"/>
-            <xsl:if test="count($eu9762009/*[lower-case(normalize-space(.)) =
-                lower-case(normalize-space($title))]) = 1 or
-                count($eu10892010/*[lower-case(normalize-space(.)) =
-                lower-case(normalize-space($title))]) = 1">
+            <xsl:if test="count($eu9762009BRGM/*[contains(translate(lower-case(normalize-space($title)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space(.)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu') )]) >= 1 or
+				count($eu10892010BRGM/*[contains(translate(lower-case(normalize-space($title)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space(.)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu') )]) >= 1">
 
               <xsl:variable name="pass" select="*/gmd:result/*/gmd:pass/gco:Boolean"/>
               <field name="inspireConformResource"><xsl:value-of select="$pass"/></field>
@@ -571,6 +569,13 @@
                                 gmd:onLine/*[gmd:linkage/gmd:URL != '']">
           <field name="linkUrl"><xsl:value-of select="gmd:linkage/gmd:URL"/></field>
           <field name="linkProtocol"><xsl:value-of select="gmd:protocol/gco:CharacterString/text()"/></field>
+          <xsl:if test="contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolWMS)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'))">
+			  <field name="recordOperatedByType">view</field>
+		  </xsl:if>
+		  <xsl:if test="contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolWFS)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu') ) or 
+						contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolDownload)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'))">
+			  <field name="recordOperatedByType">download</field>
+		  </xsl:if>
           <field name="link">
             <xsl:value-of select="gmd:protocol/*/text()"/>
             <xsl:text>|</xsl:text>
