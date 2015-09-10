@@ -573,7 +573,8 @@
 			  <field name="recordOperatedByType">view</field>
 		  </xsl:if>
 		  <xsl:if test="contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolWFS)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu') ) or 
-						contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolDownload)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'))">
+						contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolDownload)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu')) or
+						contains(translate(lower-case(normalize-space(gmd:protocol/gco:CharacterString/text())),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'), translate(lower-case(normalize-space($protocolWCS)),'áàâäéèêëíìîïóòôöúùûü','aaaaeeeeiiiioooouuuu'))">
 			  <field name="recordOperatedByType">download</field>
 		  </xsl:if>
           <field name="link">

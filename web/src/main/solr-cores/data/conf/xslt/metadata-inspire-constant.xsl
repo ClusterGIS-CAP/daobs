@@ -68,6 +68,7 @@
   
   <xsl:variable name="protocolWMS" test="wms"></xsl:variable>
   <xsl:variable name="protocolWFS" test="wfs"></xsl:variable>
+  <xsl:variable name="protocolWCS" test="wcs"></xsl:variable>
   <xsl:variable name="protocolDownload" test="download"></xsl:variable>
   
   
