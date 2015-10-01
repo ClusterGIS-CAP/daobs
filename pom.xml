@@ -302,5 +302,29 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<env>dev</env>
+				<daobs.conf.value>${config.dir}</daobs.conf.value>
+			</properties>
+		</profile>
+		<profile>
+			<id>int</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<env>int</env>
+				<daobs.conf.value>classpath:conf-daobs.properties</daobs.conf.value>
+			</properties>
+		</profile>
+	</profiles>
+  
 </project>
 

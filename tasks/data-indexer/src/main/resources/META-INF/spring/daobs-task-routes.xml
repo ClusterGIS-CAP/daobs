@@ -10,7 +10,7 @@
 
   <bean id="bridgePropertyPlaceholder"
         class="org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:conf-daobs.propertiess"/>
+		<property name="location" value="${daobs.conf.value}"/>
 <!-- 		<property name="location" value="WEB-INF/config.properties"/> -->
   </bean>
 
