@@ -66,10 +66,10 @@
     <in>INSPIRE</in>
   </xsl:variable>
   
-  <xsl:variable name="protocolWMS" select="wms"></xsl:variable>
-  <xsl:variable name="protocolWFS" select="wfs"></xsl:variable>
-  <xsl:variable name="protocolWCS" select="wcs"></xsl:variable>
-  <xsl:variable name="protocolDownload" select="download"></xsl:variable>
+  <xsl:variable name="protocolWMS" select="'wms'"></xsl:variable>
+  <xsl:variable name="protocolWFS" select="'wfs'"></xsl:variable>
+  <xsl:variable name="protocolWCS" select="'wcs'"></xsl:variable>
+  <xsl:variable name="protocolDownload" select="'download'"></xsl:variable>
   
   
 </xsl:stylesheet>
