@@ -72,7 +72,7 @@ public class CustomReportingController {
                                                    required = false) String fq,
                                            @RequestParam(
                                                    value = "rows",
-                                                   defaultValue = "10000",
+                                                   defaultValue = "70000",
                                                    required = false) int rows)
             throws IOException {
         IndicatorCalculatorImpl indicatorCalculator =
@@ -122,7 +122,7 @@ public class CustomReportingController {
                                                    required = false) String fq,
                                            @RequestParam(
                                                    value = "rows",
-                                                   defaultValue = "20000",
+                                                   defaultValue = "70000",
                                                    required = false) int rows,
                                            @PathVariable(value = "reporting") String reporting,
                                            @PathVariable(value = "territory") String territory)
