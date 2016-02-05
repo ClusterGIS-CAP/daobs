@@ -298,7 +298,7 @@
     <activemq.version>5.6.0</activemq.version>
     <xbean.version>3.18</xbean.version>
 
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
