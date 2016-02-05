@@ -300,7 +300,7 @@
 
           <xsl:variable name="thesaurusId"
                         select="normalize-space(../gmd:thesaurusName/gmd:CI_Citation/
-                                  gmd:identifier/gmd:MD_Identifier/
+                                  gmd:identifier[position() = 1]/gmd:MD_Identifier/
                                     gmd:code/*)"/>
 
           <xsl:variable name="key">

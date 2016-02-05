@@ -281,6 +281,8 @@
     <data.dir>${project.basedir}/target/solr/WEB-INF/datadir</data.dir>
 
     <solr.version>4.10.4</solr.version>
+    <solr.core.data>data</solr.core.data>
+    <solr.core.dashboard>dashboard</solr.core.dashboard>
 
     <guava.version>17.0</guava.version>
 
